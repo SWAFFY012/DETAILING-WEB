@@ -1,0 +1,416 @@
+/* ============================================================
+   theme.css — визуальная система второго сайта (favorit)
+   поверх вёрстки и контента BY SHAH.
+   Подключается ПОСЛЕ styles.css и перекрывает его токены.
+   ============================================================ */
+
+:root {
+  /* палитра: красный акцент вместо золота */
+  --clr_main:      #e5241d;
+  --clr_secondary: #7a0000;
+
+  --bg:        #0d0d0f;
+  --bg-2:      #131316;
+  --bg-3:      #17171b;
+  --surface:   #1c1c21;
+  --line:      rgba(255, 255, 255, .09);
+  --text:      #ffffff;
+  --muted:     #a1a1aa;
+
+  /* золото -> красный (переменные из styles.css) */
+  --gold:      #e5241d;
+  --gold-2:    #ff4b40;
+  --gold-soft: rgba(229, 36, 29, .14);
+
+  --radius:    12px;
+  --maxw:      1400px;
+  --shadow:    4px 4px 15px 0 rgba(0, 0, 0, .5);
+
+  --font: "Roboto", "Manrope", system-ui, sans-serif;
+  --header_h: 74px;
+  --header_h_mob: 56px;
+  --fast_anim: .15s;
+  --slow_anim: .35s;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.container { max-width: var(--maxw); }
+
+/* ── типографика второго сайта: плотнее, крупнее, uppercase ── */
+h1, h2, h3,
+.section__title,
+.hero__title {
+  font-family: var(--font);
+  letter-spacing: -.01em;
+}
+
+.section__title {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.section__eyebrow {
+  color: var(--clr_main);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 600;
+  font-size: .8rem;
+}
+
+/* ── кнопки в стиле второго сайта: прямоугольные, плотные ── */
+.btn {
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .04em;
+  transition: background var(--fast_anim), color var(--fast_anim),
+              border-color var(--fast_anim), transform var(--fast_anim);
+}
+
+.btn--gold {
+  background: var(--clr_main);
+  color: #fff;
+  border: 1px solid var(--clr_main);
+}
+.btn--gold:hover {
+  background: var(--clr_secondary);
+  border-color: var(--clr_secondary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: #fff;
+  background: transparent;
+}
+.btn--ghost:hover {
+  border-color: var(--clr_main);
+  color: var(--clr_main);
+  background: transparent;
+}
+
+.accent { color: var(--clr_main); }
+
+/* ── шапка ── */
+.header {
+  height: var(--header_h);
+  background: rgba(13, 13, 15, .92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  text-transform: uppercase;
+  font-size: .82rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+.nav a:hover { color: var(--clr_main); }
+.header__phone { font-weight: 700; }
+
+/* ============================================================
+   HERO — видео-баннер второго сайта
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.25) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 40%, rgba(0,0,0,.8) 100%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  padding-top: calc(var(--header_h) + 40px);
+  padding-bottom: 120px;
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: .2em 0 .35em;
+  max-width: 16ch;
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: rgba(255, 255, 255, .82);
+  max-width: 54ch;
+  line-height: 1.6;
+}
+
+.hero__cta { margin-top: 2rem; display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* переключатель услуг (слайдер второго сайта) */
+.hero__slides {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 2.5rem 0 0;
+  padding: 0;
+}
+
+.hero__slide-btn {
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .78);
+  padding: 9px 16px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  cursor: pointer;
+  transition: all var(--fast_anim);
+}
+.hero__slide-btn:hover {
+  border-color: var(--clr_main);
+  color: #fff;
+}
+.hero__slide-btn.is-active {
+  background: var(--clr_main);
+  border-color: var(--clr_main);
+  color: #fff;
+}
+
+.hero__stats {
+  margin-top: 2.5rem;
+  gap: clamp(24px, 5vw, 64px);
+}
+.hero__stats b { color: var(--clr_main); }
+
+/* счётчик слайдов справа снизу */
+.hero__counter {
+  position: absolute;
+  right: clamp(16px, 4vw, 56px);
+  bottom: 48px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255, 255, 255, .7);
+  font-size: .95rem;
+  letter-spacing: .06em;
+}
+.hero__counter b { color: #fff; font-size: 1.2rem; }
+
+.hero__nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(0, 0, 0, .35);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--fast_anim);
+}
+.hero__nav-btn:hover {
+  background: var(--clr_main);
+  border-color: var(--clr_main);
+}
+
+.hero__scroll {
+  z-index: 3;
+  color: rgba(255, 255, 255, .6);
+}
+.hero__scroll:hover { color: var(--clr_main); }
+
+@media (max-width: 720px) {
+  .hero { min-height: 88vh; }
+  .hero__counter { bottom: 20px; }
+  .hero__slides { gap: 6px; }
+  .hero__slide-btn { font-size: .74rem; padding: 7px 12px; }
+}
+
+/* ============================================================
+   КАРУСЕЛЬ РАБОТ — принцип секции LANDOS
+   две строки, горизонтальная прокрутка, подпись на плитке
+   ============================================================ */
+.works {
+  background: var(--bg-2);
+  padding: clamp(56px, 7vw, 96px) 0;
+  overflow: hidden;
+}
+
+.works__head {
+  text-align: center;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.works__title {
+  font-size: clamp(1.8rem, 3.6vw, 3rem);
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.works__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.works__row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 2px 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.works__row::-webkit-scrollbar { display: none; }
+
+/* вторая строка со сдвигом — как в оригинале */
+.works__row--offset > .works__item:first-child {
+  margin-left: clamp(40px, 7vw, 140px);
+}
+
+.works__item {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(220px, 22vw, 300px);
+  height: clamp(150px, 15vw, 190px);
+  border-radius: var(--radius);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.works__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--slow_anim);
+}
+.works__item:hover img { transform: scale(1.06); }
+
+/* подпись поверх плитки */
+.works__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .82) 100%);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--slow_anim), transform var(--slow_anim);
+}
+.works__item:hover .works__caption,
+.works__item.is-shown .works__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.works__caption b {
+  display: block;
+  color: #fff;
+  font-size: .98rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.works__caption span {
+  display: block;
+  margin-top: 2px;
+  color: rgba(255, 255, 255, .7);
+  font-size: .78rem;
+}
+
+/* стрелки прокрутки */
+.works__nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.works__nav-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: transparent;
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--fast_anim);
+}
+.works__nav-btn:hover {
+  background: var(--clr_main);
+  border-color: var(--clr_main);
+}
+
+@media (max-width: 720px) {
+  .works__item {
+    width: 68vw;
+    height: 40vw;
+  }
+  .works__row--offset > .works__item:first-child { margin-left: 32px; }
+  /* на телефоне подпись всегда видна — hover нет */
+  .works__caption { opacity: 1; transform: none; }
+}
+
+/* ── секции, карточки, формы под новую палитру ── */
+.section--dark { background: var(--bg-2); }
+.card, .feature, .review, .form, .calc, .contacts__map {
+  border-radius: var(--radius);
+  border-color: var(--line);
+}
+.card:hover { border-color: rgba(229, 36, 29, .45); }
+.card__price, .review__stars, .reviews__score, .reviews__stars { color: var(--clr_main); }
+.card__hint { color: var(--clr_main); }
+.feature__icon { color: var(--clr_main); border-color: rgba(229, 36, 29, .35); }
+.feature__icon svg { stroke: var(--clr_main); }
+
+.chip input:checked + span,
+.calc__opt input:checked ~ span { color: var(--clr_main); }
+
+.form__field input:focus,
+.form__field textarea:focus,
+.form__field select:focus {
+  border-color: var(--clr_main);
+  outline: none;
+}
+
+.calc__total { color: var(--clr_main); }
+.footer { background: var(--bg); border-top: 1px solid var(--line); }
+.fab__btn { background: var(--clr_main); }
+.fab__btn:hover { background: var(--clr_secondary); }
