@@ -6,10 +6,10 @@
 
 :root {
   --radius: 1.625rem;
-  --background: 0 0% 0%;
-  --foreground: 240 4% 82%;
-  --primary: 240 4% 82%;
-  --primary-foreground: 240 5% 7%;
+  --background: 210 33% 97%;
+  --foreground: 215 29% 18%;
+  --primary: 38 68% 52%;
+  --primary-foreground: 0 0% 100%;
 }
 
 .shadcn-button { font: inherit; }

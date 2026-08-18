@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": {
-    "name": "by-shah-detailing",
+    "name": "spa-auto-detailing",
     "productType": "premium automotive detailing landing page",
     "stack": [
       "react",
@@ -23,22 +23,22 @@
     "instructions": []
   },
   "design": {
-    "colorMode": "dark",
+    "colorMode": "light",
     "colors": {
       "--background": {
-        "value": "0 0% 0%",
+        "value": "210 33% 97%",
         "source": "src/app.css"
       },
       "--foreground": {
-        "value": "240 4% 82%",
+        "value": "215 29% 18%",
         "source": "src/app.css"
       },
       "--primary": {
-        "value": "240 4% 82%",
+        "value": "38 68% 52%",
         "source": "src/app.css"
       },
       "--primary-foreground": {
-        "value": "240 5% 7%",
+        "value": "0 0% 100%",
         "source": "src/app.css"
       }
     },
@@ -77,6 +77,8 @@
     ,"Use subtle lift and edge-only violet glow for feature capsules on hover; keep their idle state glow-free."
     ,"Hide hero carousel arrows and counter, and center the contact-card booking action."
     ,"Use violet for primary booking CTAs and a dark-gray left-to-right underline animation for desktop navigation while preserving its typography."
+    ,"Rebrand the interface as SPA AUTO, remove the graphic logo, and use a light pearl-blue palette with warm gold-orange accents."
+    ,"Treat all address, phone, social, review, and map content as explicit examples rather than real business data."
   ],
   "evidence": [
     {

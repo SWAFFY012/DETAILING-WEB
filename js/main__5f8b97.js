@@ -1,4 +1,4 @@
-/* ═══════════════ BY SHAH — интерактив ═══════════════ */
+/* ═══════════════ SPA AUTO — интерактив ═══════════════ */
 (function () {
   'use strict';
 
@@ -16,8 +16,8 @@
 
   /* ─── Cookies и Яндекс.Метрика ─── */
   var loadMetrika = function () {
-    if (window.__byShahMetrikaLoaded) return;
-    window.__byShahMetrikaLoaded = true;
+    if (window.__spaAutoMetrikaLoaded) return;
+    window.__spaAutoMetrikaLoaded = true;
     window.dataLayer = window.dataLayer || [];
     (function (m, e, t, r, i, k, a) {
       m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
@@ -46,7 +46,7 @@
 
   var cookieNotice = document.getElementById('cookieNotice');
   var cookieAccept = document.getElementById('cookieAccept');
-  var cookieKey = 'byShahCookieConsent';
+  var cookieKey = 'spaAutoCookieConsent';
   try {
     if (localStorage.getItem(cookieKey) === 'accepted') {
       loadMetrika();
@@ -344,12 +344,12 @@
             status.textContent = '✓ Заявка отправлена! Мы\u00A0свяжемся с\u00A0вами в\u00A0ближайшее время.';
           } else {
             status.className = 'form__status is-err';
-            status.textContent = (res && res.error) || 'Не\u00A0удалось отправить. Позвоните нам: +7\u00A0901\u00A0907-23-12';
+            status.textContent = (res && res.error) || 'Не\u00A0удалось отправить. Используйте демонстрационные контакты на странице.';
           }
         })
         .catch(function () {
           status.className = 'form__status is-err';
-          status.textContent = 'Ошибка сети. Позвоните нам: +7\u00A0901\u00A0907-23-12';
+          status.textContent = 'Ошибка сети. Используйте демонстрационные контакты на странице.';
         })
         .finally(function () {
           submitBtn.disabled = false;
@@ -433,7 +433,7 @@
       mapFrame.setAttribute('src', mapSrc);
       mapFrame.setAttribute('loading', 'lazy');
       mapFrame.setAttribute('allowfullscreen', '');
-      mapFrame.setAttribute('title', 'Карта: Москва, проезд Олимпийской Деревни, вл22Б');
+      mapFrame.setAttribute('title', 'Демонстрационная карта расположения студии');
       mapFrame.addEventListener('load', function () {
         mapLoaded = true;
         window.clearTimeout(mapFallbackTimer);
