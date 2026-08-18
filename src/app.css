@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "../css/fonts__5a8024.css";
+@import "../css/styles__536589.css";
+@import "../css/theme.css";
+@import "./light-theme.css";
+
+:root {
+  --radius: 1.625rem;
+  --background: 0 0% 0%;
+  --foreground: 240 4% 82%;
+  --primary: 240 4% 82%;
+  --primary-foreground: 240 5% 7%;
+}
+
+.shadcn-button { font: inherit; }
+
+#root { min-height: 100dvh; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

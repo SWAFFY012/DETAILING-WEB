@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "project": {
+    "name": "by-shah-detailing",
+    "productType": "premium automotive detailing landing page",
+    "stack": [
+      "react",
+      "shadcn",
+      "tailwind-v4",
+      "vite"
+    ]
+  },
+  "sources": {
+    "tokens": [
+      "src/app.css"
+    ],
+    "components": [
+      "src/components/ui"
+    ],
+    "assets": [
+      "assets"
+    ],
+    "instructions": []
+  },
+  "design": {
+    "colorMode": "dark",
+    "colors": {
+      "--background": {
+        "value": "0 0% 0%",
+        "source": "src/app.css"
+      },
+      "--foreground": {
+        "value": "240 4% 82%",
+        "source": "src/app.css"
+      },
+      "--primary": {
+        "value": "240 4% 82%",
+        "source": "src/app.css"
+      },
+      "--primary-foreground": {
+        "value": "240 5% 7%",
+        "source": "src/app.css"
+      }
+    },
+    "typography": {},
+    "spacing": {},
+    "radius": {
+      "--radius": {
+        "value": "1.625rem",
+        "source": "src/app.css"
+      }
+    },
+    "shadows": {},
+    "motion": {},
+    "density": "balanced"
+  },
+  "components": {
+    "installed": [
+      "button"
+    ],
+    "preferredPrimitives": [
+      "radix-ui"
+    ],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [
+    "Use the Favorit-inspired black and #202024 section palette with silver text and no red or orange accents.",
+    "Use rgba(0,0,0,.4) with 30px backdrop blur for the glass navigation.",
+    "Use Onest for interface text and Unbounded for headings, prices and currency.",
+    "Use circular controls and dark capsule feature badges with silver circular icons.",
+    "Drive the two-row works gallery horizontally from vertical page scroll, matching the LANDOS reference behavior.",
+    "Remove decorative eyebrow text and estimated price from the booking form."
+    ,"Use subtle lift and edge-only violet glow for feature capsules on hover; keep their idle state glow-free."
+    ,"Hide hero carousel arrows and counter, and center the contact-card booking action."
+    ,"Use violet for primary booking CTAs and a dark-gray left-to-right underline animation for desktop navigation while preserving its typography."
+  ],
+  "evidence": [
+    {
+      "fact": "components.installed",
+      "source": "src/components/ui"
+    },
+    {
+      "fact": "design.colorMode:dark",
+      "source": "src/app.css"
+    },
+    {
+      "fact": "design.tokens",
+      "source": "src/app.css"
+    },
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:shadcn",
+      "source": "components.json"
+    },
+    {
+      "fact": "project.stack:tailwind-v4",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:vite",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-08-18T07:45:58.173Z"
+}

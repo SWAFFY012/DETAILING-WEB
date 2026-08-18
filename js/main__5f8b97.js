@@ -282,7 +282,6 @@
   if (form) {
     var formServices = document.getElementById('formServices');
     var formClass = document.getElementById('formClass');
-    var formTotalEl = document.getElementById('formTotal');
 
     var getFormSelection = function () {
       var opt = formClass.options[formClass.selectedIndex];
@@ -292,8 +291,6 @@
     };
 
     var refreshFormTotal = function () {
-      var s = getFormSelection();
-      formTotalEl.textContent = s.total > 0 ? 'от\u00A0' + fmt(s.total) : 'выберите услуги';
       syncStates(form);
     };
     form.addEventListener('change', refreshFormTotal);
@@ -313,7 +310,6 @@
         carclass: sel.carClass,
         datetime: val('datetime'),
         comment: val('comment'),
-        price: sel.total > 0 ? 'от\u00A0' + fmt(sel.total) : '',
         company: val('company') // honeypot
       };
       var submitBtn = form.querySelector('.form__submit');

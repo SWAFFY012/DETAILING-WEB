@@ -5,9 +5,9 @@
    ============================================================ */
 
 :root {
-  /* палитра: красный акцент вместо золота */
-  --clr_main:      #e5241d;
-  --clr_secondary: #7a0000;
+  /* монохромная графитовая палитра */
+  --clr_main:      #d0d0d4;
+  --clr_secondary: #aeb4bd;
 
   --bg:        #0d0d0f;
   --bg-2:      #131316;
@@ -17,10 +17,10 @@
   --text:      #ffffff;
   --muted:     #a1a1aa;
 
-  /* золото -> красный (переменные из styles.css) */
-  --gold:      #e5241d;
-  --gold-2:    #ff4b40;
-  --gold-soft: rgba(229, 36, 29, .14);
+  /* совместимые переменные из базового слоя */
+  --gold:      #d0d0d4;
+  --gold-2:    #aeb4bd;
+  --gold-soft: rgba(208, 208, 212, .14);
 
   --radius:    12px;
   --maxw:      1400px;
@@ -394,10 +394,10 @@ h1, h2, h3,
   border-radius: var(--radius);
   border-color: var(--line);
 }
-.card:hover { border-color: rgba(229, 36, 29, .45); }
+.card:hover { border-color: rgba(208, 208, 212, .45); }
 .card__price, .review__stars, .reviews__score, .reviews__stars { color: var(--clr_main); }
 .card__hint { color: var(--clr_main); }
-.feature__icon { color: var(--clr_main); border-color: rgba(229, 36, 29, .35); }
+.feature__icon { color: var(--clr_main); border-color: rgba(208, 208, 212, .35); }
 .feature__icon svg { stroke: var(--clr_main); }
 
 .chip input:checked + span,
