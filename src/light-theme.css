@@ -122,12 +122,10 @@ h1, h2, h3, .hero__title, .section__title, .works__title {
   background: #dfe7f0;
 }
 
-.hero__video { filter: saturate(.62) contrast(.88) brightness(1.16); }
+.hero__video { filter: none; }
 
 .hero__scrim {
-  background:
-    linear-gradient(90deg, rgb(244 248 252 / 93%) 0%, rgb(244 248 252 / 72%) 48%, rgb(244 248 252 / 20%) 100%),
-    linear-gradient(180deg, rgb(221 231 241 / 42%) 0%, transparent 50%, rgb(244 248 252 / 82%) 100%);
+  background: transparent;
 }
 
 .hero__bg::after { display: none !important; background-image: none !important; }
