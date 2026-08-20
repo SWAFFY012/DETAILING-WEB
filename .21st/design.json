@@ -83,6 +83,9 @@
     ,"Use a full-width three-column calculator: choices, fast-changing service visual, and gold animated price result."
     ,"Use three edge-to-edge horizontal gallery rows that fit inside one desktop viewport."
     ,"Use official natural-color Telegram, VK, and MAX marks for floating contact actions."
+    ,"Render services as borderless light automotive image panels with text inside a luminous lower mist."
+    ,"Keep calculator empty-state copy uppercase, remove gray helper copy, and size prices by result-container width."
+    ,"Use distinct generated work photography in the third carousel row and taller rows with minimal top whitespace."
   ],
   "evidence": [
     {

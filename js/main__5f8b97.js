@@ -407,7 +407,8 @@
     var recalc = function () {
       var s = getCalcSelection();
       refreshDisplayedPrices(s.classKey);
-      calcTotalEl.textContent = s.total > 0 ? 'от\u00A0' + fmt(s.total) : 'выберите услуги';
+      calcTotalEl.textContent = s.total > 0 ? 'от\u00A0' + fmt(s.total) : 'ВЫБЕРИТЕ УСЛУГИ';
+      calcTotalEl.classList.toggle('is-empty', s.total === 0);
       animatePrice();
       syncStates(calc);
     };
