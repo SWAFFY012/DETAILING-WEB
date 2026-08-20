@@ -2375,8 +2375,8 @@ body { overflow-x: clip; }
 .header {
   background: transparent;
   border-bottom: 1px solid transparent;
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0px) saturate(100%) !important;
+  -webkit-backdrop-filter: blur(0px) saturate(100%) !important;
   transition: background-color .28s ease, border-color .28s ease, backdrop-filter .28s ease;
 }
 
@@ -2384,8 +2384,8 @@ body { overflow-x: clip; }
 .header.is-menu-open {
   background: rgb(244 247 251 / 76%);
   border-bottom: 1px solid rgb(32 43 58 / 12%);
-  backdrop-filter: blur(22px) saturate(132%);
-  -webkit-backdrop-filter: blur(22px) saturate(132%);
+  backdrop-filter: blur(22px) saturate(132%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(132%) !important;
 }
 
 .header__inner {

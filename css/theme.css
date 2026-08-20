@@ -101,7 +101,6 @@ h1, h2, h3,
 .header {
   height: var(--header_h);
   background: rgba(13, 13, 15, .92);
-  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
 .nav a {
