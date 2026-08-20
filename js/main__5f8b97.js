@@ -376,6 +376,26 @@
   var calc = document.getElementById('calc');
   if (calc) {
     var calcTotalEl = document.getElementById('calcTotal');
+    var calcVisual = document.getElementById('calcVisual');
+    var calcVisualCaption = document.getElementById('calcVisualCaption');
+
+    var animatePrice = function () {
+      calcTotalEl.classList.remove('is-changing');
+      void calcTotalEl.offsetWidth;
+      calcTotalEl.classList.add('is-changing');
+    };
+
+    var showCalcVisual = function (label) {
+      if (!label || !calcVisual) return;
+      var nextSrc = label.dataset.image;
+      if (!nextSrc) return;
+      calcVisual.classList.remove('is-swapping');
+      void calcVisual.offsetWidth;
+      calcVisual.src = nextSrc;
+      calcVisual.alt = label.dataset.imageAlt || label.textContent.trim();
+      if (calcVisualCaption) calcVisualCaption.textContent = label.querySelector('span').textContent;
+      calcVisual.classList.add('is-swapping');
+    };
 
     var getCalcSelection = function () {
       var classInput = calc.querySelector('input[name="carclass"]:checked');
@@ -388,9 +408,18 @@
       var s = getCalcSelection();
       refreshDisplayedPrices(s.classKey);
       calcTotalEl.textContent = s.total > 0 ? 'от\u00A0' + fmt(s.total) : 'выберите услуги';
+      animatePrice();
       syncStates(calc);
     };
-    calc.addEventListener('change', recalc);
+    calc.addEventListener('change', function (event) {
+      var serviceLabel = event.target.closest('.calc__opt[data-image]');
+      if (serviceLabel) showCalcVisual(serviceLabel);
+      recalc();
+    });
+    calc.addEventListener('click', function (event) {
+      var serviceLabel = event.target.closest('.calc__opt[data-image]');
+      if (serviceLabel) showCalcVisual(serviceLabel);
+    });
     recalc();
 
     // Клик по карточке услуги → отметить её в калькуляторе и прокрутить сюда
@@ -398,7 +427,7 @@
       var go = function () {
         var name = card.getAttribute('data-service');
         var box = calc.querySelector('input[type="checkbox"][value="' + name + '"]');
-        if (box) { box.checked = true; recalc(); }
+        if (box) { box.checked = true; showCalcVisual(box.closest('.calc__opt')); recalc(); }
         calc.scrollIntoView({ behavior: 'smooth' });
       };
       card.addEventListener('click', go);

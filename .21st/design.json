@@ -79,6 +79,10 @@
     ,"Use violet for primary booking CTAs and a dark-gray left-to-right underline animation for desktop navigation while preserving its typography."
     ,"Rebrand the interface as SPA AUTO, remove the graphic logo, and use a light pearl-blue palette with warm gold-orange accents."
     ,"Treat all address, phone, social, review, and map content as explicit examples rather than real business data."
+    ,"Keep all six service cards visible inside one desktop viewport with compact media and typography."
+    ,"Use a full-width three-column calculator: choices, fast-changing service visual, and gold animated price result."
+    ,"Use three edge-to-edge horizontal gallery rows that fit inside one desktop viewport."
+    ,"Use official natural-color Telegram, VK, and MAX marks for floating contact actions."
   ],
   "evidence": [
     {

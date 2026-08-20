@@ -38,6 +38,7 @@ export default function App() {
     const tracks = [
       document.querySelector("#worksRow1"),
       document.querySelector("#worksRow2"),
+      document.querySelector("#worksRow3"),
     ].filter(Boolean)
     if (!gallery || tracks.length === 0) return undefined
 
@@ -77,7 +78,7 @@ export default function App() {
         : (window.scrollY - sectionTop + window.innerHeight) * 0.3
       const movement = offset - 200
       tracks.forEach((track, index) => {
-        const direction = index === 0 ? 1 : -1
+        const direction = index % 2 === 0 ? 1 : -1
         track.style.transform = `translate3d(${-loopWidths[index] + movement * direction}px, 0, 0)`
       })
       frameRequested = false
