@@ -449,6 +449,163 @@
     }
   }
 
+  /* ─── Интерактивная стопка преимуществ ─── */
+  var advantageRoot = document.querySelector('[data-advantage-stack]');
+  if (advantageRoot) {
+    var advantageProjects = [
+      {
+        number: '01', category: 'ЗАЩИТА КАЧЕСТВА', title: 'Гарантия на работы',
+        description: 'Работаем сертифицированными материалами и отвечаем за результат каждой услуги.',
+        images: [
+          ['assets/services-v2/ceramic-light-4k.jpg', 'Нанесение защитного покрытия на кузов'],
+          ['assets/services-v2/wrapping-light-4k.jpg', 'Точная оклейка кузова защитной плёнкой'],
+          ['assets/advantages/guarantee.jpg', 'Мастер наносит защитный состав на автомобиль']
+        ]
+      },
+      {
+        number: '02', category: 'ПРОЗРАЧНЫЙ ПРОЦЕСС', title: 'Фото- и видеоотчёт',
+        description: 'Фиксируем ключевые этапы и показываем, как меняется автомобиль в процессе работы.',
+        images: [
+          ['assets/works/interior-cleaning.webp', 'Детальная очистка элементов салона'],
+          ['assets/works/polishing.webp', 'Контроль качества полировки кузова'],
+          ['assets/advantages/report.jpg', 'Специалист снимает фотоотчёт выполненных работ']
+        ]
+      },
+      {
+        number: '03', category: 'СРОКИ ПОД КОНТРОЛЕМ', title: 'Точно в срок',
+        description: 'Заранее согласуем этапы и дату выдачи. Большинство работ выполняем за один-два дня.',
+        images: [
+          ['assets/services-v2/windshield-light-4k.jpg', 'Точная установка защитной плёнки на стекло'],
+          ['assets/works/anti-chrome.webp', 'Аккуратная работа с деталями автомобиля'],
+          ['assets/advantages/deadline.jpg', 'Финальная проверка автомобиля перед выдачей']
+        ]
+      },
+      {
+        number: '04', category: 'ПОДБОР РЕШЕНИЯ', title: 'Бесплатная консультация',
+        description: 'Оценим состояние автомобиля и предложим подходящие услуги без переплаты и навязывания.',
+        images: [
+          ['assets/services-v2/interior-light-4k.jpg', 'Профессиональный уход за светлым салоном'],
+          ['assets/services-v2/polishing-light-4k.jpg', 'Выбор подходящего уровня полировки'],
+          ['assets/advantages/consultation.jpg', 'Консультант показывает клиенту варианты материалов']
+        ]
+      }
+    ];
+
+    var cardsHost = advantageRoot.querySelector('.advantage-stack__cards');
+    cardsHost.innerHTML = advantageProjects.map(function (project, index) {
+      var firstLoad = index === 0 ? 'eager' : 'lazy';
+      return '<article class="adv-card" data-adv-card data-index="' + index + '" tabindex="0" role="group" aria-label="' + project.number + '. ' + project.title + '">' +
+        '<button class="adv-card__edge" type="button" tabindex="-1" aria-label="Показать карточку: ' + project.title + '"></button>' +
+        '<header class="adv-card__head">' +
+          '<span class="adv-card__number" aria-hidden="true">' + project.number + '</span>' +
+          '<div class="adv-card__copy"><span class="adv-card__category">' + project.category + '</span><h3>' + project.title + '</h3><p>' + project.description + '</p></div>' +
+          '<a class="adv-card__action" href="#booking" aria-label="Записаться: ' + project.title + '">ЗАПИСАТЬСЯ</a>' +
+        '</header>' +
+        '<div class="adv-card__gallery">' +
+          '<div class="adv-card__small">' +
+            '<img src="' + project.images[0][0] + '" alt="' + project.images[0][1] + '" width="1200" height="675" loading="' + firstLoad + '" decoding="async">' +
+            '<img src="' + project.images[1][0] + '" alt="' + project.images[1][1] + '" width="1200" height="675" loading="lazy" decoding="async">' +
+          '</div>' +
+          '<img class="adv-card__featured" src="' + project.images[2][0] + '" alt="' + project.images[2][1] + '" width="2400" height="1600" loading="' + firstLoad + '" decoding="async">' +
+        '</div>' +
+      '</article>';
+    }).join('');
+
+    var advantageCards = Array.prototype.slice.call(cardsHost.querySelectorAll('[data-adv-card]'));
+    var advantageIndex = 0;
+    var advantageLocked = false;
+    var advantageTimer = 0;
+    var advantagePaused = false;
+    var reduceAdvantageMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var advantageTransitionTime = reduceAdvantageMotion ? 220 : 680;
+
+    var setAdvantageDepths = function () {
+      advantageCards.forEach(function (card, index) {
+        var depth = (index - advantageIndex + advantageCards.length) % advantageCards.length;
+        card.dataset.depth = String(depth);
+        card.setAttribute('aria-current', depth === 0 ? 'true' : 'false');
+        card.setAttribute('aria-hidden', depth > 2 ? 'true' : 'false');
+        card.tabIndex = depth === 0 ? 0 : -1;
+        var edgeButton = card.querySelector('.adv-card__edge');
+        edgeButton.tabIndex = depth === 1 || depth === 2 ? 0 : -1;
+      });
+    };
+
+    var stopAdvantageTimer = function () {
+      window.clearTimeout(advantageTimer);
+      advantageTimer = 0;
+    };
+
+    var startAdvantageTimer = function () {
+      stopAdvantageTimer();
+      if (reduceAdvantageMotion || advantagePaused) return;
+      advantageTimer = window.setTimeout(function () { moveAdvantage(1); }, 4200);
+    };
+
+    var moveAdvantage = function (direction) {
+      if (advantageLocked) return;
+      advantageLocked = true;
+      stopAdvantageTimer();
+      var outgoing = advantageCards[advantageIndex];
+      outgoing.classList.add(direction > 0 ? 'is-leaving' : 'is-leaving-back');
+      advantageIndex = (advantageIndex + direction + advantageCards.length) % advantageCards.length;
+      window.requestAnimationFrame(function () {
+        setAdvantageDepths();
+        advantageCards[advantageIndex].classList.add('is-revealing');
+      });
+      window.setTimeout(function () {
+        advantageCards.forEach(function (card) { card.classList.remove('is-leaving', 'is-leaving-back', 'is-revealing'); });
+        advantageLocked = false;
+        startAdvantageTimer();
+      }, advantageTransitionTime);
+    };
+
+    setAdvantageDepths();
+    startAdvantageTimer();
+
+    advantageRoot.addEventListener('click', function (event) {
+      if (event.target.closest('.adv-card__action')) return;
+      var card = event.target.closest('[data-adv-card]');
+      if (!card) return;
+      var depth = Number(card.dataset.depth);
+      if (depth === 1 || depth === 2) moveAdvantage(1);
+    });
+    advantageRoot.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        moveAdvantage(1);
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        moveAdvantage(-1);
+      } else if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-adv-card]') && event.target.dataset.depth !== '0') {
+        event.preventDefault();
+        moveAdvantage(1);
+      }
+    });
+    advantageRoot.addEventListener('mouseenter', function () { advantagePaused = true; stopAdvantageTimer(); });
+    advantageRoot.addEventListener('mouseleave', function () { advantagePaused = false; startAdvantageTimer(); });
+    advantageRoot.addEventListener('focusin', function () { advantagePaused = true; stopAdvantageTimer(); });
+    advantageRoot.addEventListener('focusout', function (event) {
+      if (!advantageRoot.contains(event.relatedTarget)) { advantagePaused = false; startAdvantageTimer(); }
+    });
+
+    var advantageTouchX = 0;
+    var advantageTouchY = 0;
+    advantageRoot.addEventListener('touchstart', function (event) {
+      advantageTouchX = event.changedTouches[0].clientX;
+      advantageTouchY = event.changedTouches[0].clientY;
+      stopAdvantageTimer();
+    }, { passive: true });
+    advantageRoot.addEventListener('touchend', function (event) {
+      var dx = event.changedTouches[0].clientX - advantageTouchX;
+      var dy = event.changedTouches[0].clientY - advantageTouchY;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) > 44) moveAdvantage((Math.abs(dy) > Math.abs(dx) ? dy : dx) < 0 ? 1 : -1);
+      else startAdvantageTimer();
+    }, { passive: true });
+
+    window.addEventListener('pagehide', stopAdvantageTimer, { once: true });
+  }
+
   /* ─── Карта: внешний iframe только если он доступен ─── */
   var mapEl = document.getElementById('map');
   if (mapEl) {
