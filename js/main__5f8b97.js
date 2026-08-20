@@ -93,10 +93,10 @@
   var sceneSections = Array.prototype.slice.call(document.querySelectorAll('.scroll-scene-section[data-scene]'));
   if (scrollStory && scrollScene && sceneVideo && sceneLayerA && sceneLayerB && sceneSections.length) {
     var sceneSources = [
-      'assets/backgrounds/scenes/01.webp', 'assets/backgrounds/scenes/02.webp',
-      'assets/backgrounds/scenes/03.webp', 'assets/backgrounds/scenes/04.webp',
-      'assets/backgrounds/scenes/05.webp', 'assets/backgrounds/scenes/06.webp',
-      'assets/backgrounds/scenes/07.webp', 'assets/backgrounds/scenes/08.webp'
+      'assets/backgrounds/scenes-4k/01.webp', 'assets/backgrounds/scenes-4k/02.webp',
+      'assets/backgrounds/scenes-4k/03.webp', 'assets/backgrounds/scenes-4k/04.webp',
+      'assets/backgrounds/scenes-4k/05.webp', 'assets/backgrounds/scenes-4k/06.webp',
+      'assets/backgrounds/scenes-4k/07.webp', 'assets/backgrounds/scenes-4k/08.webp'
     ];
     var sceneReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var sceneMobile = window.matchMedia('(max-width: 760px)');
@@ -612,7 +612,7 @@
           calcVisual.src = nextSrc;
           calcVisual.alt = nextAlt;
           calcVisualNext.classList.remove('is-visible');
-        }, 420);
+        }, 820);
       };
 
       if (calcVisualNext.decode) {

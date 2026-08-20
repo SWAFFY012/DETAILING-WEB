@@ -99,6 +99,8 @@
     ,"Keep the hero header full-width and transparent at page start; reveal the blurred surface only after scrolling."
     ,"Drive the existing advantage-card design with a sticky scroll-linked stack: one 100vh segment per card, reversible translation from below, no wheel interception."
     ,"Use matching flat light surfaces for hero actions and service selectors, with gold active underlines; drive the ten-card review carousel by translucent side arrows rather than wheel capture."
+    ,"Use a permanently visible full-width horizontal hero navigation without a hamburger; use restrained translucent controls and blur only where it improves legibility."
+    ,"Use eight dedicated 3840x2160 WebP detailing scenes for scroll backgrounds and opacity-only calculator image crossfades with no scale or position motion."
   ],
   "evidence": [
     {
