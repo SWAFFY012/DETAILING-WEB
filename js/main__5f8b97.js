@@ -122,6 +122,23 @@
     counters.forEach(runCounter);
   }
 
+  /* ─── Переключатель услуг в hero ─── */
+  var heroSlideButtons = Array.prototype.slice.call(document.querySelectorAll('.hero__slide-btn'));
+  var heroTitle = document.getElementById('heroTitle');
+  if (heroSlideButtons.length && heroTitle) {
+    heroSlideButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        heroSlideButtons.forEach(function (item) { item.classList.remove('is-active'); });
+        button.classList.add('is-active');
+        heroTitle.classList.add('is-changing');
+        window.setTimeout(function () {
+          heroTitle.innerHTML = button.getAttribute('data-title') || heroTitle.innerHTML;
+          heroTitle.classList.remove('is-changing');
+        }, 140);
+      });
+    });
+  }
+
   /* ─── Слайдер «До / После» ─── */
   var range = document.getElementById('baRange');
   var before = document.getElementById('baBefore');
