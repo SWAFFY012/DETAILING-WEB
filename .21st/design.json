@@ -34,7 +34,7 @@
         "source": "src/app.css"
       },
       "--primary": {
-        "value": "38 68% 52%",
+        "value": "50 82% 68%",
         "source": "src/app.css"
       },
       "--primary-foreground": {
@@ -93,7 +93,11 @@
     ,"Use self-hosted Montserrat with Cyrillic coverage across all interface copy, headings, buttons, prices, and numeric indicators."
     ,"Refine the Zenith hero into a frameless automotive-tech system: transparent header, small uppercase text navigation, one rectangular gold CTA, no auxiliary pills, and a restrained specification rail."
     ,"Match Zenith statistics with Montserrat 300 tabular numerals, Montserrat 400 uppercase labels, thin vertical dividers, and generous column spacing."
-    ,"Keep the hero headline monochrome near-black at Montserrat 400, including its formerly gold accent line."
+    ,"Keep В ДЕТАЛЯХ near-black and use #F0D96C for the animated КАЧЕСТВО line at Montserrat 400."
+    ,"Use #F0D96C as the single primary gold accent throughout the interface."
+    ,"Type and delete the word КАЧЕСТВО in a continuous reduced-motion-safe loop while keeping В ДЕТАЛЯХ stable."
+    ,"Keep the hero header full-width and transparent at page start; reveal the blurred surface only after scrolling."
+    ,"Drive the existing advantage-card design with a sticky scroll-linked stack: one 100vh segment per card, reversible translation from below, no wheel interception."
   ],
   "evidence": [
     {

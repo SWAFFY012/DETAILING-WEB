@@ -122,7 +122,7 @@
     counters.forEach(runCounter);
   }
 
-  /* ─── Переключатель услуг в hero ─── */
+  /* ─── Переключатель услуг и печатающийся заголовок в hero ─── */
   var heroSlideButtons = Array.prototype.slice.call(document.querySelectorAll('.hero__slide-btn'));
   var heroTitle = document.getElementById('heroTitle');
   if (heroSlideButtons.length && heroTitle) {
@@ -130,13 +130,43 @@
       button.addEventListener('click', function () {
         heroSlideButtons.forEach(function (item) { item.classList.remove('is-active'); });
         button.classList.add('is-active');
-        heroTitle.classList.add('is-changing');
-        window.setTimeout(function () {
-          heroTitle.innerHTML = button.getAttribute('data-title') || heroTitle.innerHTML;
-          heroTitle.classList.remove('is-changing');
-        }, 140);
       });
     });
+  }
+
+  var heroTypeword = document.getElementById('heroTypeword');
+  if (heroTypeword) {
+    var typewordText = heroTypeword.getAttribute('data-word') || 'КАЧЕСТВО';
+    var reduceTypewordMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var typewordIndex = reduceTypewordMotion ? typewordText.length : 0;
+    var typewordDeleting = false;
+    var typewordTimer = 0;
+
+    var renderTypeword = function () {
+      heroTypeword.textContent = typewordText.slice(0, typewordIndex);
+    };
+    var stepTypeword = function () {
+      if (typewordDeleting) {
+        typewordIndex = Math.max(0, typewordIndex - 1);
+      } else {
+        typewordIndex = Math.min(typewordText.length, typewordIndex + 1);
+      }
+      renderTypeword();
+
+      var delay = typewordDeleting ? 72 : 118;
+      if (!typewordDeleting && typewordIndex === typewordText.length) {
+        typewordDeleting = true;
+        delay = 1500;
+      } else if (typewordDeleting && typewordIndex === 0) {
+        typewordDeleting = false;
+        delay = 520;
+      }
+      typewordTimer = window.setTimeout(stepTypeword, delay);
+    };
+
+    renderTypeword();
+    if (!reduceTypewordMotion) typewordTimer = window.setTimeout(stepTypeword, 360);
+    window.addEventListener('pagehide', function () { window.clearTimeout(typewordTimer); }, { once: true });
   }
 
   /* ─── Слайдер «До / После» ─── */
@@ -554,98 +584,63 @@
     }).join('');
 
     var advantageCards = Array.prototype.slice.call(cardsHost.querySelectorAll('[data-adv-card]'));
-    var advantageIndex = 0;
-    var advantageLocked = false;
-    var advantageTimer = 0;
-    var advantagePaused = false;
-    var reduceAdvantageMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var advantageTransitionTime = reduceAdvantageMotion ? 220 : 680;
+    var advantageSection = advantageRoot.closest('.advantage-catalog');
+    var advantageFrameRequested = false;
+    var advantageSectionTop = 0;
+    var advantageTravel = 1;
+    var reduceAdvantageMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    var setAdvantageDepths = function () {
+    advantageRoot.classList.add('is-scroll-linked');
+    advantageSection.style.setProperty('--adv-card-count', String(advantageCards.length));
+    advantageCards.forEach(function (card, index) {
+      card.dataset.depth = '0';
+      card.style.zIndex = String(index + 1);
+      card.style.setProperty('--adv-translate', index === 0 ? '0%' : '100%');
+      var edgeButton = card.querySelector('.adv-card__edge');
+      if (edgeButton) edgeButton.hidden = true;
+    });
+
+    var measureAdvantages = function () {
+      advantageSectionTop = window.scrollY + advantageSection.getBoundingClientRect().top;
+      advantageTravel = Math.max(1, advantageSection.offsetHeight - window.innerHeight);
+    };
+
+    var updateAdvantages = function () {
+      var progress = Math.min(1, Math.max(0, (window.scrollY - advantageSectionTop) / advantageTravel));
+      var segmentProgress = progress * Math.max(1, advantageCards.length - 1);
+      var activeIndex = Math.min(advantageCards.length - 1, Math.floor(segmentProgress + 0.001));
+
       advantageCards.forEach(function (card, index) {
-        var depth = (index - advantageIndex + advantageCards.length) % advantageCards.length;
-        card.dataset.depth = String(depth);
-        card.setAttribute('aria-current', depth === 0 ? 'true' : 'false');
-        card.setAttribute('aria-hidden', depth > 2 ? 'true' : 'false');
-        card.tabIndex = depth === 0 ? 0 : -1;
-        var edgeButton = card.querySelector('.adv-card__edge');
-        edgeButton.tabIndex = depth === 1 || depth === 2 ? 0 : -1;
+        var localProgress = index === 0
+          ? 1
+          : Math.min(1, Math.max(0, segmentProgress - (index - 1)));
+        var translate = (1 - localProgress) * 100;
+        card.style.setProperty('--adv-translate', translate.toFixed(3) + '%');
+        var isCurrent = index === activeIndex;
+        card.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+        card.setAttribute('aria-hidden', isCurrent ? 'false' : 'true');
+        card.tabIndex = isCurrent ? 0 : -1;
+        card.inert = !isCurrent;
       });
+      advantageRoot.style.setProperty('--adv-progress', progress.toFixed(4));
+      advantageFrameRequested = false;
     };
 
-    var stopAdvantageTimer = function () {
-      window.clearTimeout(advantageTimer);
-      advantageTimer = 0;
+    var requestAdvantageUpdate = function () {
+      if (advantageFrameRequested) return;
+      advantageFrameRequested = true;
+      window.requestAnimationFrame(updateAdvantages);
     };
 
-    var startAdvantageTimer = function () {
-      stopAdvantageTimer();
-      if (reduceAdvantageMotion || advantagePaused) return;
-      advantageTimer = window.setTimeout(function () { moveAdvantage(1); }, 4200);
+    var refreshAdvantages = function () {
+      measureAdvantages();
+      requestAdvantageUpdate();
     };
 
-    var moveAdvantage = function (direction) {
-      if (advantageLocked) return;
-      advantageLocked = true;
-      stopAdvantageTimer();
-      var outgoing = advantageCards[advantageIndex];
-      outgoing.classList.add(direction > 0 ? 'is-leaving' : 'is-leaving-back');
-      advantageIndex = (advantageIndex + direction + advantageCards.length) % advantageCards.length;
-      window.requestAnimationFrame(function () {
-        setAdvantageDepths();
-        advantageCards[advantageIndex].classList.add('is-revealing');
-      });
-      window.setTimeout(function () {
-        advantageCards.forEach(function (card) { card.classList.remove('is-leaving', 'is-leaving-back', 'is-revealing'); });
-        advantageLocked = false;
-        startAdvantageTimer();
-      }, advantageTransitionTime);
-    };
-
-    setAdvantageDepths();
-    startAdvantageTimer();
-
-    advantageRoot.addEventListener('click', function (event) {
-      if (event.target.closest('.adv-card__action')) return;
-      var card = event.target.closest('[data-adv-card]');
-      if (!card) return;
-      var depth = Number(card.dataset.depth);
-      if (depth === 1 || depth === 2) moveAdvantage(1);
-    });
-    advantageRoot.addEventListener('keydown', function (event) {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        event.preventDefault();
-        moveAdvantage(1);
-      } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        moveAdvantage(-1);
-      } else if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-adv-card]') && event.target.dataset.depth !== '0') {
-        event.preventDefault();
-        moveAdvantage(1);
-      }
-    });
-    advantageRoot.addEventListener('mouseenter', function () { advantagePaused = true; stopAdvantageTimer(); });
-    advantageRoot.addEventListener('mouseleave', function () { advantagePaused = false; startAdvantageTimer(); });
-    advantageRoot.addEventListener('focusin', function () { advantagePaused = true; stopAdvantageTimer(); });
-    advantageRoot.addEventListener('focusout', function (event) {
-      if (!advantageRoot.contains(event.relatedTarget)) { advantagePaused = false; startAdvantageTimer(); }
-    });
-
-    var advantageTouchX = 0;
-    var advantageTouchY = 0;
-    advantageRoot.addEventListener('touchstart', function (event) {
-      advantageTouchX = event.changedTouches[0].clientX;
-      advantageTouchY = event.changedTouches[0].clientY;
-      stopAdvantageTimer();
-    }, { passive: true });
-    advantageRoot.addEventListener('touchend', function (event) {
-      var dx = event.changedTouches[0].clientX - advantageTouchX;
-      var dy = event.changedTouches[0].clientY - advantageTouchY;
-      if (Math.max(Math.abs(dx), Math.abs(dy)) > 44) moveAdvantage((Math.abs(dy) > Math.abs(dx) ? dy : dx) < 0 ? 1 : -1);
-      else startAdvantageTimer();
-    }, { passive: true });
-
-    window.addEventListener('pagehide', stopAdvantageTimer, { once: true });
+    refreshAdvantages();
+    window.addEventListener('scroll', requestAdvantageUpdate, { passive: true });
+    window.addEventListener('resize', refreshAdvantages);
+    reduceAdvantageMotion.addEventListener?.('change', requestAdvantageUpdate);
   }
 
   /* ─── Карта: внешний iframe только если он доступен ─── */
