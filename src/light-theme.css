@@ -1896,7 +1896,7 @@ body,
 /* Cascade guard for the immersive controls (must remain last). */
 .hero__slide-btn {
   color: #101820;
-  background: transparent !important;
+  background: rgb(255 255 255 / 68%) !important;
   border: 0 !important;
   border-bottom: 2px solid rgb(16 24 32 / 72%) !important;
   text-shadow: 0 0 12px rgb(255 255 255 / 88%);
@@ -2778,7 +2778,7 @@ body { overflow-x: clip; }
 
 .hero__slide-btn {
   color: #101820;
-  background: transparent !important;
+  background: rgb(255 255 255 / 68%) !important;
   border: 0 !important;
   border-bottom: 2px solid rgb(16 24 32 / 72%) !important;
   opacity: 1;
@@ -2804,6 +2804,61 @@ body { overflow-x: clip; }
 .fab__tg { background-position: 0 43%; }
 .fab__vk { background-position: 50% 43%; }
 .fab__max { background-position: 100% 43%; }
+.fab__btn:hover,
+.fab__btn:focus-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-color: transparent !important;
+  background-image: url("../assets/social/social-3d.png") !important;
+  filter: none !important;
+  transform: scale(1.045);
+}
+
+.hero__title { max-width: 16ch; }
+.hero__typewriter-line { width: 15ch; }
+.hero__typewriter { min-width: 0; }
+.hero__title .accent[hidden] { display: none; }
+
+#reviews .reviews__carousel {
+  position: relative;
+  width: 100%;
+}
+#reviews .reviews__arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  width: clamp(48px, 4.2vw, 66px);
+  height: clamp(48px, 4.2vw, 66px);
+  display: grid;
+  place-items: center;
+  color: #101820;
+  background: rgb(255 255 255 / 82%);
+  border: 1px solid rgb(255 255 255 / 78%);
+  border-radius: 50%;
+  box-shadow: 0 10px 32px rgb(4 10 17 / 18%);
+  backdrop-filter: none;
+  transform: translateY(-50%);
+  font-size: clamp(21px, 2vw, 30px);
+  transition: background-color .22s ease, color .22s ease, opacity .22s ease, transform .22s ease;
+}
+#reviews .reviews__arrow--prev { left: clamp(18px, 2.2vw, 40px); }
+#reviews .reviews__arrow--next { right: clamp(88px, 7vw, 122px); }
+#reviews .reviews__arrow:hover,
+#reviews .reviews__arrow:focus-visible {
+  color: #101820;
+  background: #F0D96C;
+  transform: translateY(-50%) scale(1.04);
+}
+#reviews .reviews__arrow:disabled { opacity: .42; pointer-events: none; }
+
+#booking .booking__lead,
+#booking .booking__contacts,
+#booking .booking__contacts a,
+#booking .booking__contacts li > span,
+#booking .booking__contacts li span:first-child {
+  color: #fff;
+  text-shadow: 0 2px 14px rgb(0 0 0 / 48%);
+}
 
 .advantage-catalog {
   height: calc(var(--adv-card-count, 4) * 100svh);
@@ -2839,9 +2894,9 @@ body { overflow-x: clip; }
     padding-inline: 10px;
     font-size: 9px;
   }
-  .hero__title { max-width: 11.2ch; letter-spacing: -.02em; }
-  .hero__typewriter-line { width: 10.3ch; }
-  .hero__typewriter { min-width: 9.1ch; }
+  .hero__title { max-width: 15ch; letter-spacing: -.02em; }
+  .hero__typewriter-line { width: 15ch; }
+  .hero__typewriter { min-width: 0; }
   .advantage-stack.is-scroll-linked { height: 100svh; min-height: 0; }
 }
 

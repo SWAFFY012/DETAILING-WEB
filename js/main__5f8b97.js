@@ -213,11 +213,18 @@
   /* ─── Переключатель услуг и печатающийся заголовок в hero ─── */
   var heroSlideButtons = Array.prototype.slice.call(document.querySelectorAll('.hero__slide-btn'));
   var heroTitle = document.getElementById('heroTitle');
+  var heroSubtitle = document.getElementById('heroSubtitle');
   if (heroSlideButtons.length && heroTitle) {
     heroSlideButtons.forEach(function (button) {
       button.addEventListener('click', function () {
         heroSlideButtons.forEach(function (item) { item.classList.remove('is-active'); });
         button.classList.add('is-active');
+        var nextWord = button.dataset.typeword || button.textContent.trim();
+        var nextRest = button.dataset.rest || '';
+        heroTitle.dataset.activeTypeword = nextWord;
+        heroTitle.dataset.activeRest = nextRest;
+        if (window.setHeroTypedTitle) window.setHeroTypedTitle(nextWord, nextRest);
+        if (heroSubtitle && button.dataset.sub) heroSubtitle.innerHTML = button.dataset.sub;
       });
     });
   }
@@ -225,6 +232,8 @@
   var heroTypeword = document.getElementById('heroTypeword');
   if (heroTypeword) {
     var typewordText = heroTypeword.getAttribute('data-word') || 'КАЧЕСТВО';
+    var heroTitleRest = document.getElementById('heroTitleRest');
+    var heroTitleA11y = document.getElementById('heroTitleA11y');
     var reduceTypewordMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var typewordIndex = reduceTypewordMotion ? typewordText.length : 0;
     var typewordDeleting = false;
@@ -252,8 +261,27 @@
       typewordTimer = window.setTimeout(stepTypeword, delay);
     };
 
-    renderTypeword();
-    if (!reduceTypewordMotion) typewordTimer = window.setTimeout(stepTypeword, 360);
+    window.setHeroTypedTitle = function (nextWord, nextRest) {
+      window.clearTimeout(typewordTimer);
+      typewordText = (nextWord || '').trim().toUpperCase();
+      nextRest = (nextRest || '').trim().toUpperCase();
+      typewordIndex = reduceTypewordMotion ? typewordText.length : 0;
+      typewordDeleting = false;
+      heroTypeword.setAttribute('data-word', typewordText);
+      if (heroTitleRest) {
+        heroTitleRest.textContent = nextRest;
+        heroTitleRest.hidden = !nextRest;
+      }
+      if (heroTitleA11y) heroTitleA11y.textContent = (typewordText + (nextRest ? ' ' + nextRest : '')).trim();
+      renderTypeword();
+      if (!reduceTypewordMotion) typewordTimer = window.setTimeout(stepTypeword, 180);
+    };
+
+    var initialHeroTitle = document.getElementById('heroTitle');
+    window.setHeroTypedTitle(
+      initialHeroTitle && initialHeroTitle.dataset.activeTypeword || typewordText,
+      initialHeroTitle && initialHeroTitle.dataset.activeRest || (heroTitleRest ? heroTitleRest.textContent : '')
+    );
     window.addEventListener('pagehide', function () { window.clearTimeout(typewordTimer); }, { once: true });
   }
 
@@ -362,20 +390,30 @@
     startGalleryAuto();
   }
 
-  /* ─── Отзывы: свободная карусель колесом без стрелок ─── */
-  var reviewsTrack = document.querySelector('#reviews .reviews');
-  if (reviewsTrack) {
-    reviewsTrack.setAttribute('tabindex', '0');
-    reviewsTrack.addEventListener('wheel', function (event) {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      var maxScroll = reviewsTrack.scrollWidth - reviewsTrack.clientWidth;
-      if (maxScroll <= 0) return;
-      var next = Math.max(0, Math.min(maxScroll, reviewsTrack.scrollLeft + event.deltaY));
-      var canMove = next !== reviewsTrack.scrollLeft;
-      if (!canMove) return;
-      event.preventDefault();
-      reviewsTrack.scrollTo({ left: next, behavior: 'smooth' });
-    }, { passive: false });
+  /* ─── Отзывы: карусель по полупрозрачным стрелкам ─── */
+  var reviewsTrack = document.getElementById('reviewsTrack');
+  var reviewsPrev = document.getElementById('reviewsPrev');
+  var reviewsNext = document.getElementById('reviewsNext');
+  if (reviewsTrack && reviewsPrev && reviewsNext) {
+    var reviewStep = function () {
+      var card = reviewsTrack.querySelector('.review');
+      var gap = parseFloat(window.getComputedStyle(reviewsTrack).gap) || 24;
+      return card ? card.getBoundingClientRect().width + gap : reviewsTrack.clientWidth * .82;
+    };
+    var updateReviewArrows = function () {
+      var max = Math.max(0, reviewsTrack.scrollWidth - reviewsTrack.clientWidth);
+      reviewsPrev.disabled = reviewsTrack.scrollLeft <= 4;
+      reviewsNext.disabled = reviewsTrack.scrollLeft >= max - 4;
+    };
+    reviewsPrev.addEventListener('click', function () {
+      reviewsTrack.scrollBy({ left: -reviewStep(), behavior: 'smooth' });
+    });
+    reviewsNext.addEventListener('click', function () {
+      reviewsTrack.scrollBy({ left: reviewStep(), behavior: 'smooth' });
+    });
+    reviewsTrack.addEventListener('scroll', updateReviewArrows, { passive: true });
+    window.addEventListener('resize', updateReviewArrows, { passive: true });
+    updateReviewArrows();
   }
 
   /* ─── Маска телефона (мягкая) ─── */

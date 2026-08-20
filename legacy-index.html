@@ -62,7 +62,7 @@
     <div class="container hero__inner">
       <p class="hero__eyebrow reveal">Детейлинг-студия · Москва</p>
       <div class="hero__content">
-        <h1 class="hero__title reveal" id="heroTitle"><span class="hero__typewriter-line"><span class="visually-hidden">Качество</span><span class="hero__typewriter" id="heroTypeword" data-word="КАЧЕСТВО" aria-hidden="true"></span><span class="hero__typewriter-cursor" aria-hidden="true"></span></span><span class="accent">В&nbsp;ДЕТАЛЯХ</span></h1>
+        <h1 class="hero__title reveal" id="heroTitle"><span class="hero__typewriter-line"><span class="visually-hidden" id="heroTitleA11y">Качество в деталях</span><span class="hero__typewriter" id="heroTypeword" data-word="КАЧЕСТВО" aria-hidden="true"></span><span class="hero__typewriter-cursor" aria-hidden="true"></span></span><span class="accent" id="heroTitleRest">В&nbsp;ДЕТАЛЯХ</span></h1>
         <p class="hero__subtitle reveal" id="heroSubtitle">Оклейка плёнкой · Полировка · Химчистка салона. Возвращаем автомобилю идеальный вид и&nbsp;защищаем его надолго.</p>
 
         <div class="hero__cta reveal">
@@ -73,26 +73,32 @@
 
       <ul class="hero__slides reveal" id="heroSlides" aria-label="Услуги студии">
         <li><button type="button" class="hero__slide-btn is-active"
+                data-typeword="КАЧЕСТВО" data-rest="В ДЕТАЛЯХ"
                 data-title="Качество &lt;span class=&quot;accent&quot;&gt;в&amp;nbsp;деталях&lt;/span&gt;"
                 data-sub="Оклейка плёнкой · Полировка · Химчистка салона. Возвращаем автомобилю идеальный вид и&nbsp;защищаем его надолго."
                 data-service="">Все услуги</button></li>
         <li><button type="button" class="hero__slide-btn"
+                data-typeword="ОКЛЕЙКА" data-rest="ПЛЁНКОЙ"
                 data-title="Оклейка &lt;span class=&quot;accent&quot;&gt;плёнкой&lt;/span&gt;"
                 data-sub="Антигравийная защита кузова, винил, смена цвета. Полностью или&nbsp;отдельные элементы. От&nbsp;25&nbsp;000&nbsp;₽."
                 data-service="Оклейка плёнкой">Оклейка плёнкой</button></li>
         <li><button type="button" class="hero__slide-btn"
+                data-typeword="ПОЛИРОВКА" data-rest=""
                 data-title="&lt;span class=&quot;accent&quot;&gt;Полировка&lt;/span&gt; кузова"
                 data-sub="Удаление царапин и&nbsp;голограмм, восстановительная и&nbsp;защитная полировка кузова и&nbsp;фар. От&nbsp;15&nbsp;000&nbsp;₽."
                 data-service="Полировка">Полировка</button></li>
         <li><button type="button" class="hero__slide-btn"
+                data-typeword="ХИМЧИСТКА" data-rest="САЛОНА"
                 data-title="Химчистка &lt;span class=&quot;accent&quot;&gt;салона&lt;/span&gt;"
                 data-sub="Глубокая чистка кожи, ткани, потолка и&nbsp;пластика с&nbsp;устранением запахов. От&nbsp;15&nbsp;000&nbsp;₽."
                 data-service="Химчистка салона">Химчистка салона</button></li>
         <li><button type="button" class="hero__slide-btn"
+                data-typeword="КЕРАМИЧЕСКОЕ" data-rest="ПОКРЫТИЕ"
                 data-title="&lt;span class=&quot;accent&quot;&gt;Керамическое&lt;/span&gt; покрытие"
                 data-sub="Защитное покрытие кузова — гидрофобный эффект и&nbsp;блеск на&nbsp;месяцы вперёд. От&nbsp;10&nbsp;000&nbsp;₽."
                 data-service="Керамическое покрытие">Керамика</button></li>
         <li><button type="button" class="hero__slide-btn"
+                data-typeword="БРОНЬ" data-rest="ЛОБОВОГО СТЕКЛА"
                 data-title="Бронь &lt;span class=&quot;accent&quot;&gt;лобового стекла&lt;/span&gt;"
                 data-sub="Защитная плёнка на&nbsp;лобовое стекло для&nbsp;снижения риска сколов и&nbsp;пескоструя. От&nbsp;25&nbsp;000&nbsp;₽."
                 data-service="Бронь лобового стекла">Бронь стекла</button></li>
@@ -347,7 +353,9 @@
         </a>
       </header>
 
-      <div class="reviews">
+      <div class="reviews__carousel">
+        <button type="button" class="reviews__arrow reviews__arrow--prev" id="reviewsPrev" aria-label="Предыдущий отзыв">←</button>
+        <div class="reviews" id="reviewsTrack">
         <blockquote class="review reveal">
           <div class="review__stars">★★★★★</div>
           <p>Несколько раз обращалась к&nbsp;ребятам. Работа всегда на&nbsp;высоте!</p>
@@ -378,6 +386,28 @@
           <p>Классный детейлинг. Полируют на&nbsp;отлично, всем советую.</p>
           <footer>— Антон Сорочинский</footer>
         </blockquote>
+        <blockquote class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>Оклейка выполнена аккуратно, края и сложные элементы сделаны безупречно.</p>
+          <footer>— Михаил К.</footer>
+        </blockquote>
+        <blockquote class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>После химчистки салон снова выглядит новым. Отдельное спасибо за внимание к деталям.</p>
+          <footer>— Екатерина В.</footer>
+        </blockquote>
+        <blockquote class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>Полировку и керамику сделали отлично. Цвет стал глубже, автомобиль сияет.</p>
+          <footer>— Денис Р.</footer>
+        </blockquote>
+        <blockquote class="review reveal">
+          <div class="review__stars">★★★★★</div>
+          <p>Всё объяснили заранее, соблюли сроки и показали результат каждого этапа.</p>
+          <footer>— Ольга Н.</footer>
+        </blockquote>
+        </div>
+        <button type="button" class="reviews__arrow reviews__arrow--next" id="reviewsNext" aria-label="Следующий отзыв">→</button>
       </div>
 
       <div class="reviews__more reveal">
@@ -548,7 +578,11 @@
       var b = slides[cur];
       slides.forEach(function (s) { s.classList.remove('is-active'); });
       b.classList.add('is-active');
-      title.innerHTML = b.getAttribute('data-title');
+      var typeword = b.getAttribute('data-typeword') || b.textContent.trim().toUpperCase();
+      var rest = b.getAttribute('data-rest') || '';
+      title.dataset.activeTypeword = typeword;
+      title.dataset.activeRest = rest;
+      if (window.setHeroTypedTitle) window.setHeroTypedTitle(typeword, rest);
       sub.innerHTML   = b.getAttribute('data-sub');
       if (idxEl) idxEl.textContent = cur + 1;
       if (userAction) restart();
