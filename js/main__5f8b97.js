@@ -377,7 +377,9 @@
   if (calc) {
     var calcTotalEl = document.getElementById('calcTotal');
     var calcVisual = document.getElementById('calcVisual');
+    var calcVisualNext = document.getElementById('calcVisualNext');
     var calcVisualCaption = document.getElementById('calcVisualCaption');
+    var calcVisualSwapId = 0;
 
     var animatePrice = function () {
       calcTotalEl.classList.remove('is-changing');
@@ -386,15 +388,42 @@
     };
 
     var showCalcVisual = function (label) {
-      if (!label || !calcVisual) return;
+      if (!label || !calcVisual || !calcVisualNext) return;
       var nextSrc = label.dataset.image;
       if (!nextSrc) return;
-      calcVisual.classList.remove('is-swapping');
-      void calcVisual.offsetWidth;
-      calcVisual.src = nextSrc;
-      calcVisual.alt = label.dataset.imageAlt || label.textContent.trim();
-      if (calcVisualCaption) calcVisualCaption.textContent = label.querySelector('span').textContent;
-      calcVisual.classList.add('is-swapping');
+      var nextAlt = label.dataset.imageAlt || label.textContent.trim();
+      var nextCaption = label.querySelector('span').textContent;
+      var swapId = ++calcVisualSwapId;
+      var preloader = new Image();
+      var revealed = false;
+      calcVisualNext.classList.remove('is-visible');
+
+      var reveal = function () {
+        if (revealed || swapId !== calcVisualSwapId) return;
+        revealed = true;
+        calcVisualNext.src = nextSrc;
+        if (calcVisualCaption) {
+          calcVisualCaption.classList.add('is-changing');
+          window.setTimeout(function () {
+            if (swapId !== calcVisualSwapId) return;
+            calcVisualCaption.textContent = nextCaption;
+            calcVisualCaption.classList.remove('is-changing');
+          }, 180);
+        }
+        window.requestAnimationFrame(function () {
+          if (swapId === calcVisualSwapId) calcVisualNext.classList.add('is-visible');
+        });
+        window.setTimeout(function () {
+          if (swapId !== calcVisualSwapId) return;
+          calcVisual.src = nextSrc;
+          calcVisual.alt = nextAlt;
+          calcVisualNext.classList.remove('is-visible');
+        }, 620);
+      };
+
+      preloader.onload = reveal;
+      preloader.src = nextSrc;
+      if (preloader.complete) reveal();
     };
 
     var getCalcSelection = function () {
@@ -416,10 +445,6 @@
       var serviceLabel = event.target.closest('.calc__opt[data-image]');
       if (serviceLabel) showCalcVisual(serviceLabel);
       recalc();
-    });
-    calc.addEventListener('click', function (event) {
-      var serviceLabel = event.target.closest('.calc__opt[data-image]');
-      if (serviceLabel) showCalcVisual(serviceLabel);
     });
     recalc();
 
