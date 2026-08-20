@@ -36,20 +36,27 @@
       <div class="header__actions">
         <a href="#contacts" class="header__phone">+7&nbsp;(000)&nbsp;000-00-00</a>
         <a href="#booking" class="btn btn--gold btn--sm">Записаться</a>
+        <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-
-      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </header>
 
+  <main class="scroll-story" id="scrollStory">
+    <div class="scroll-scene" id="scrollScene" aria-hidden="true">
+      <video class="hero__video scroll-scene__video" id="heroVideo"
+             autoplay muted loop playsinline preload="auto">
+        <source src="video/hero.mp4" type="video/mp4">
+      </video>
+      <div class="scroll-scene__image scroll-scene__image--a" id="scrollSceneLayerA"></div>
+      <div class="scroll-scene__image scroll-scene__image--b" id="scrollSceneLayerB"></div>
+      <div class="scroll-scene__overlay"></div>
+    </div>
+    <div class="scroll-story__content">
+
   <!-- ─────────── Hero (видео-баннер) ─────────── -->
   <section class="hero" id="hero">
-    <video class="hero__video" id="heroVideo"
-           autoplay muted loop playsinline preload="auto">
-      <source src="video/hero.mp4" type="video/mp4">
-    </video>
     <div class="hero__scrim" aria-hidden="true"></div>
 
     <div class="container hero__inner">
@@ -108,7 +115,7 @@
   </section>
 
   <!-- ─────────── Услуги ─────────── -->
-  <section class="section" id="services">
+  <section class="section scroll-scene-section" id="services" data-scene="0">
     <div class="container">
       <header class="section__head reveal">
         <p class="section__eyebrow">Что&nbsp;мы делаем</p>
@@ -163,7 +170,7 @@
   </section>
 
   <!-- ─────────── Калькулятор ─────────── -->
-  <section class="section section--dark" id="calc">
+  <section class="section section--dark scroll-scene-section" id="calc" data-scene="1">
     <div class="container">
       <header class="section__head reveal">
         <p class="section__eyebrow">Прикиньте бюджет</p>
@@ -211,7 +218,7 @@
   </section>
 
   <!-- ─────────── Преимущества ─────────── -->
-  <section class="section advantage-catalog" id="advantages" aria-labelledby="advantageCatalogTitle">
+  <section class="section advantage-catalog scroll-scene-section" id="advantages" data-scene="2" aria-labelledby="advantageCatalogTitle">
     <h2 class="visually-hidden" id="advantageCatalogTitle">Преимущества SPA AUTO</h2>
     <div class="advantage-stack reveal" data-advantage-stack tabindex="0" aria-label="Каталог преимуществ SPA AUTO. Используйте стрелки для переключения.">
       <div class="advantage-stack__cards" aria-live="polite"></div>
@@ -220,7 +227,7 @@
   </section>
 
   <!-- ─────────── До / После ─────────── -->
-  <section class="section" id="beforeafter">
+  <section class="section scroll-scene-section" id="beforeafter" data-scene="3">
     <div class="container">
       <header class="section__head reveal">
         <p class="section__eyebrow">Результат виден сразу</p>
@@ -242,7 +249,7 @@
   </section>
 
   <!-- ─────────── Наши работы (карусель) ─────────── -->
-  <section class="works" id="gallery">
+  <section class="works scroll-scene-section" id="gallery" data-scene="4">
     <div class="container">
       <header class="works__head reveal">
         <h2 class="works__title">Примеры работ SPA AUTO</h2>
@@ -328,7 +335,7 @@
   </section>
 
   <!-- ─────────── Отзывы ─────────── -->
-  <section class="section" id="reviews">
+  <section class="section scroll-scene-section" id="reviews" data-scene="5">
     <div class="container">
       <header class="section__head reveal">
         <p class="section__eyebrow">Нам доверяют</p>
@@ -380,7 +387,7 @@
   </section>
 
   <!-- ─────────── Запись ─────────── -->
-  <section class="section section--dark" id="booking">
+  <section class="section section--dark scroll-scene-section" id="booking" data-scene="6">
     <div class="container booking">
       <div class="booking__info reveal">
         <p class="section__eyebrow">Онлайн-запись</p>
@@ -460,7 +467,7 @@
   </section>
 
   <!-- ─────────── Контакты ─────────── -->
-  <section class="section" id="contacts">
+  <section class="section scroll-scene-section" id="contacts" data-scene="7">
     <div class="container">
       <header class="section__head reveal">
         <p class="section__eyebrow">Как&nbsp;нас найти</p>
@@ -488,6 +495,9 @@
       </div>
     </div>
   </section>
+
+    </div>
+  </main>
 
   <!-- ─────────── Футер ─────────── -->
   <footer class="footer">

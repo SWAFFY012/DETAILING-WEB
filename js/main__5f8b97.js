@@ -79,6 +79,94 @@
     nav.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') toggleMenu(false);
     });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') toggleMenu(false);
+    });
+  }
+
+  /* ─── Единая полноэкранная scroll-сцена ─── */
+  var scrollStory = document.getElementById('scrollStory');
+  var scrollScene = document.getElementById('scrollScene');
+  var sceneVideo = document.getElementById('heroVideo');
+  var sceneLayerA = document.getElementById('scrollSceneLayerA');
+  var sceneLayerB = document.getElementById('scrollSceneLayerB');
+  var sceneSections = Array.prototype.slice.call(document.querySelectorAll('.scroll-scene-section[data-scene]'));
+  if (scrollStory && scrollScene && sceneVideo && sceneLayerA && sceneLayerB && sceneSections.length) {
+    var sceneSources = [
+      'assets/backgrounds/scenes/01.webp', 'assets/backgrounds/scenes/02.webp',
+      'assets/backgrounds/scenes/03.webp', 'assets/backgrounds/scenes/04.webp',
+      'assets/backgrounds/scenes/05.webp', 'assets/backgrounds/scenes/06.webp',
+      'assets/backgrounds/scenes/07.webp', 'assets/backgrounds/scenes/08.webp'
+    ];
+    var sceneReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var sceneMobile = window.matchMedia('(max-width: 760px)');
+    var activeSceneIndex = -1;
+    var activeSceneLayer = sceneLayerA;
+    var idleSceneLayer = sceneLayerB;
+    var sceneRaf = 0;
+
+    sceneSources.forEach(function (src) {
+      var image = new Image();
+      image.decoding = 'async';
+      image.src = src;
+    });
+
+    var setScene = function (index, immediate) {
+      index = Math.max(0, Math.min(sceneSources.length - 1, index));
+      if (index === activeSceneIndex) return;
+      activeSceneIndex = index;
+      idleSceneLayer.style.backgroundImage = 'url("' + sceneSources[index] + '")';
+      if (immediate || sceneReducedMotion.matches) {
+        activeSceneLayer.style.backgroundImage = idleSceneLayer.style.backgroundImage;
+        activeSceneLayer.classList.add('is-visible');
+        idleSceneLayer.classList.remove('is-visible');
+        return;
+      }
+      idleSceneLayer.classList.add('is-visible');
+      activeSceneLayer.classList.remove('is-visible');
+      var previous = activeSceneLayer;
+      activeSceneLayer = idleSceneLayer;
+      idleSceneLayer = previous;
+    };
+
+    setScene(0, true);
+
+    var updateScrollScene = function () {
+      sceneRaf = 0;
+      var hero = document.getElementById('hero');
+      if (!hero) return;
+      var heroRect = hero.getBoundingClientRect();
+      var heroProgress = Math.max(0, Math.min(1, -heroRect.top / Math.max(heroRect.height, 1)));
+      var easedHero = heroProgress * heroProgress * (3 - 2 * heroProgress);
+      sceneVideo.style.opacity = String(Math.max(0, 1 - easedHero * 1.12));
+      sceneVideo.style.filter = 'brightness(' + (1 - easedHero * .52) + ') saturate(' + (1 - easedHero * .18) + ')';
+      scrollScene.style.setProperty('--first-scene-opacity', String(Math.min(1, easedHero * 1.22)));
+
+      var viewportCenter = window.innerHeight * .5;
+      var closestIndex = 0;
+      var closestDistance = Infinity;
+      sceneSections.forEach(function (section) {
+        var rect = section.getBoundingClientRect();
+        var distance = Math.abs((rect.top + rect.height * .5) - viewportCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = parseInt(section.dataset.scene || '0', 10);
+        }
+        var sectionProgress = Math.max(0, Math.min(1, 1 - Math.abs((rect.top + rect.height * .5) - viewportCenter) / Math.max(window.innerHeight, rect.height * .65)));
+        section.style.setProperty('--scene-content-opacity', String(.58 + sectionProgress * .42));
+        section.classList.toggle('is-scene-current', sectionProgress > .68);
+      });
+      if (heroProgress > .72) setScene(closestIndex, false);
+    };
+
+    var requestSceneUpdate = function () {
+      if (!sceneRaf) sceneRaf = window.requestAnimationFrame(updateScrollScene);
+    };
+    window.addEventListener('scroll', requestSceneUpdate, { passive: true });
+    window.addEventListener('resize', requestSceneUpdate, { passive: true });
+    sceneReducedMotion.addEventListener('change', requestSceneUpdate);
+    sceneMobile.addEventListener('change', requestSceneUpdate);
+    requestSceneUpdate();
   }
 
   /* ─── Появление блоков при скролле ─── */
@@ -274,6 +362,22 @@
     startGalleryAuto();
   }
 
+  /* ─── Отзывы: свободная карусель колесом без стрелок ─── */
+  var reviewsTrack = document.querySelector('#reviews .reviews');
+  if (reviewsTrack) {
+    reviewsTrack.setAttribute('tabindex', '0');
+    reviewsTrack.addEventListener('wheel', function (event) {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      var maxScroll = reviewsTrack.scrollWidth - reviewsTrack.clientWidth;
+      if (maxScroll <= 0) return;
+      var next = Math.max(0, Math.min(maxScroll, reviewsTrack.scrollLeft + event.deltaY));
+      var canMove = next !== reviewsTrack.scrollLeft;
+      if (!canMove) return;
+      event.preventDefault();
+      reviewsTrack.scrollTo({ left: next, behavior: 'smooth' });
+    }, { passive: false });
+  }
+
   /* ─── Маска телефона (мягкая) ─── */
   var phone = document.querySelector('input[name="phone"]');
   if (phone) {
@@ -428,6 +532,12 @@
     var calcVisualCaption = document.getElementById('calcVisualCaption');
     var calcVisualSwapId = 0;
 
+    calc.querySelectorAll('.calc__opt[data-image]').forEach(function (label) {
+      var image = new Image();
+      image.decoding = 'async';
+      image.src = label.dataset.image;
+    });
+
     var animatePrice = function () {
       calcTotalEl.classList.remove('is-changing');
       void calcTotalEl.offsetWidth;
@@ -441,21 +551,20 @@
       var nextAlt = label.dataset.imageAlt || label.textContent.trim();
       var nextCaption = label.querySelector('span').textContent;
       var swapId = ++calcVisualSwapId;
-      var preloader = new Image();
       var revealed = false;
       calcVisualNext.classList.remove('is-visible');
+      calcVisualNext.src = nextSrc;
 
       var reveal = function () {
         if (revealed || swapId !== calcVisualSwapId) return;
         revealed = true;
-        calcVisualNext.src = nextSrc;
         if (calcVisualCaption) {
           calcVisualCaption.classList.add('is-changing');
           window.setTimeout(function () {
             if (swapId !== calcVisualSwapId) return;
             calcVisualCaption.textContent = nextCaption;
             calcVisualCaption.classList.remove('is-changing');
-          }, 180);
+          }, 90);
         }
         window.requestAnimationFrame(function () {
           if (swapId === calcVisualSwapId) calcVisualNext.classList.add('is-visible');
@@ -465,12 +574,16 @@
           calcVisual.src = nextSrc;
           calcVisual.alt = nextAlt;
           calcVisualNext.classList.remove('is-visible');
-        }, 620);
+        }, 420);
       };
 
-      preloader.onload = reveal;
-      preloader.src = nextSrc;
-      if (preloader.complete) reveal();
+      if (calcVisualNext.decode) {
+        calcVisualNext.decode().catch(function () {}).then(reveal);
+      } else if (calcVisualNext.complete) {
+        reveal();
+      } else {
+        calcVisualNext.onload = reveal;
+      }
     };
 
     var getCalcSelection = function () {
