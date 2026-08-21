@@ -101,6 +101,7 @@
     ,"Use matching flat light surfaces for hero actions and service selectors, with gold active underlines; drive the ten-card review carousel by translucent side arrows rather than wheel capture."
     ,"Use a permanently visible full-width horizontal hero navigation without a hamburger; use restrained translucent controls and blur only where it improves legibility."
     ,"Use eight dedicated 3840x2160 WebP detailing scenes for scroll backgrounds and opacity-only calculator image crossfades with no scale or position motion."
+    ,"Use larger black navigation labels with a left-to-right #F0D96C underline, static booking controls, and a low-blur borderless calculator surface."
   ],
   "evidence": [
     {

@@ -3099,6 +3099,113 @@ body { overflow-x: clip; }
   transition: opacity .8s cubic-bezier(.4, 0, .2, 1) !important;
 }
 
+/* Final interaction and legibility pass */
+.header__inner {
+  padding-right: clamp(14px, 1.6vw, 28px) !important;
+}
+.header__actions {
+  margin-right: 0 !important;
+}
+.nav a,
+.nav.is-open a {
+  position: relative !important;
+  color: #000 !important;
+  font-size: clamp(12px, 1vw, 15px) !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: opacity .2s ease !important;
+}
+.nav a::after,
+.nav.is-open a::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 5px !important;
+  display: block !important;
+  height: 2px !important;
+  background: #F0D96C !important;
+  transform: scaleX(0) !important;
+  transform-origin: left center !important;
+  transition: transform .28s cubic-bezier(.22, 1, .36, 1) !important;
+}
+.nav a:hover,
+.nav a:focus-visible,
+.nav.is-open a:hover,
+.nav.is-open a:focus-visible {
+  color: #000 !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+.nav a:hover::after,
+.nav a:focus-visible::after,
+.nav.is-open a:hover::after,
+.nav.is-open a:focus-visible::after {
+  transform: scaleX(1) !important;
+}
+.header__actions .btn {
+  font-size: clamp(13px, .86vw, 15px) !important;
+}
+.hero__cta .btn {
+  font-size: clamp(17px, 1.22vw, 20px) !important;
+  font-weight: 520 !important;
+  letter-spacing: .025em !important;
+}
+.hero__slide-btn {
+  padding: 9px 10px 7px !important;
+  font-size: clamp(14px, 1.05vw, 18px) !important;
+  font-weight: 520 !important;
+  letter-spacing: .015em !important;
+  line-height: 1.1 !important;
+}
+#calc .calc__form {
+  background: rgb(247 250 253 / 52%) !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px) saturate(108%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(108%) !important;
+}
+#calc .calc__visual,
+#calc .calc__result {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+#calc .calc__visual::before,
+#calc .calc__visual::after,
+#calc .calc__result::before,
+#calc .calc__result::after {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+#booking .chip,
+#booking .chip:hover,
+#booking .chip:focus-within,
+#booking .form__field input,
+#booking .form__field input:hover,
+#booking .form__field textarea,
+#booking .form__field textarea:hover,
+#booking .form__field select,
+#booking .form__field select:hover {
+  transform: none !important;
+  translate: none !important;
+}
+.contacts__item b {
+  color: #b68a16 !important;
+  font-size: clamp(15px, 1vw, 18px) !important;
+  font-weight: 600 !important;
+  letter-spacing: .08em !important;
+}
+.contacts__item p,
+.contacts__item p a {
+  color: #101820 !important;
+  font-size: clamp(18px, 1.28vw, 23px) !important;
+  line-height: 1.35 !important;
+}
+
 @media (max-width: 760px) {
   .header__inner { width: 100%; padding-inline: 14px; }
   .header__actions .btn {
@@ -3131,7 +3238,7 @@ body { overflow-x: clip; }
     scrollbar-width: none !important;
   }
   .nav::-webkit-scrollbar { display: none !important; }
-  .nav a { flex: 0 0 auto !important; font-size: 8px !important; }
+  .nav a { flex: 0 0 auto !important; font-size: 11px !important; }
   .header__actions .btn { min-width: 118px !important; min-height: 40px !important; }
   .hero__inner { padding-top: 118px !important; }
   .hero__cta { grid-template-columns: 1fr 1fr !important; }
