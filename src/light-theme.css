@@ -3275,19 +3275,45 @@ body { overflow-x: clip; }
   background-image: url("../assets/social/social-flat.png") !important;
 }
 
-/* Wide, high-contrast hero wordmark without changing its copy */
+/* Wide hero wordmark with clean video contrast */
 .hero__title {
   width: min(54vw, 900px) !important;
   max-width: none !important;
-  text-shadow: 0 0 12px rgb(255 255 255 / 88%), 0 0 34px rgb(255 255 255 / 54%) !important;
+  color: #F2EFE8 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  -webkit-text-stroke: 0 !important;
 }
 .hero__typewriter-line,
 .hero__title .accent {
   width: auto !important;
   transform: scaleX(1.34) !important;
   transform-origin: left center !important;
-  text-shadow: 0 0 12px rgb(255 255 255 / 88%), 0 0 34px rgb(255 255 255 / 54%) !important;
+  text-shadow: none !important;
+  filter: none !important;
+  -webkit-text-stroke: 0 !important;
 }
+.hero__typewriter-line,
+.hero__typewriter { color: #D9AA45 !important; }
+.hero__title .accent { color: #F2EFE8 !important; }
+
+/* Video, contrast layer, then interface content. */
+.scroll-scene__video { z-index: 1 !important; }
+.scroll-scene__overlay {
+  z-index: 2 !important;
+  background: linear-gradient(
+    90deg,
+    rgba(7, 10, 14, .72) 0%,
+    rgba(7, 10, 14, .42) 50%,
+    rgba(7, 10, 14, .18) 100%
+  ) !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.scroll-story__content { z-index: 3 !important; }
+
+#calc .calc__group legend { color: #9B741F !important; }
 
 @media (max-width: 760px) {
   .header__inner { width: 100%; padding-inline: 14px; }
