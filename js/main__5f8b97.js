@@ -717,12 +717,12 @@
     var cardsHost = advantageRoot.querySelector('.advantage-stack__cards');
     cardsHost.innerHTML = advantageProjects.map(function (project, index) {
       var firstLoad = index === 0 ? 'eager' : 'lazy';
-      return '<article class="adv-card" data-adv-card data-index="' + index + '" tabindex="0" role="group" aria-label="' + project.number + '. ' + project.title + '">' +
-        '<button class="adv-card__edge" type="button" tabindex="-1" aria-label="Показать карточку: ' + project.title + '"></button>' +
+      return '<article class="adv-card" data-adv-card data-index="' + index + '" tabindex="0" role="group" aria-label="' + project.number + '. ' + project.category + '">' +
+        '<button class="adv-card__edge" type="button" tabindex="-1" aria-label="Показать карточку: ' + project.category + '"></button>' +
         '<header class="adv-card__head">' +
           '<span class="adv-card__number" aria-hidden="true">' + project.number + '</span>' +
-          '<div class="adv-card__copy"><span class="adv-card__category">' + project.category + '</span><h3>' + project.title + '</h3><p>' + project.description + '</p></div>' +
-          '<a class="adv-card__action" href="#booking" aria-label="Записаться: ' + project.title + '">ЗАПИСАТЬСЯ</a>' +
+          '<div class="adv-card__copy"><span class="adv-card__category">' + project.category + '</span><p>' + project.description + '</p></div>' +
+          '<a class="adv-card__action" href="#booking" aria-label="Записаться: ' + project.category + '">ЗАПИСАТЬСЯ</a>' +
         '</header>' +
         '<div class="adv-card__gallery">' +
           '<div class="adv-card__small">' +

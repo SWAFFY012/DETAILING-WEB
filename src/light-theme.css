@@ -3206,6 +3206,74 @@ body { overflow-x: clip; }
   line-height: 1.35 !important;
 }
 
+/* Progressive edge blend between calculator pricing and service photography */
+.calc {
+  column-gap: 0 !important;
+}
+#calc .calc__form {
+  position: relative !important;
+  z-index: 2 !important;
+  isolation: isolate !important;
+  margin-right: -58px !important;
+  padding-right: 80px !important;
+  overflow: visible !important;
+  background: linear-gradient(90deg,
+    rgb(247 250 253 / 52%) 0%,
+    rgb(247 250 253 / 42%) 76%,
+    rgb(247 250 253 / 14%) 100%) !important;
+  backdrop-filter: blur(12px) saturate(106%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(106%) !important;
+}
+#calc .calc__form::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  top: 0 !important;
+  right: -74px !important;
+  bottom: 0 !important;
+  width: 150px !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg,
+    rgb(247 250 253 / 34%),
+    rgb(247 250 253 / 14%) 48%,
+    transparent 100%) !important;
+  backdrop-filter: blur(16px) saturate(104%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(104%) !important;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 72%) 44%, transparent 100%) !important;
+  mask-image: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 72%) 44%, transparent 100%) !important;
+}
+#calc .calc__visual {
+  z-index: 1 !important;
+}
+
+/* Advantages: category becomes the gold label; description becomes the headline */
+.adv-card__category {
+  margin-bottom: 10px !important;
+  color: #b28718 !important;
+  font-size: clamp(16px, 1.35vw, 22px) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  letter-spacing: .075em !important;
+}
+.adv-card__copy p {
+  max-width: 42ch !important;
+  margin: 0 !important;
+  color: #101820 !important;
+  font-family: var(--font) !important;
+  font-size: clamp(25px, 2.5vw, 38px) !important;
+  font-weight: 400 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -.035em !important;
+}
+.adv-card__copy h3 {
+  display: none !important;
+}
+.fab__btn,
+.fab__btn:hover,
+.fab__btn:focus-visible {
+  background-image: url("../assets/social/social-flat.png") !important;
+}
+
 @media (max-width: 760px) {
   .header__inner { width: 100%; padding-inline: 14px; }
   .header__actions .btn {
@@ -3250,8 +3318,16 @@ body { overflow-x: clip; }
     gap: 10px !important;
   }
   .hero__slide-btn { width: 100% !important; min-width: 0 !important; min-height: 44px !important; }
-  #calc .calc__form { padding: 16px !important; overflow: visible !important; }
+  #calc .calc__form {
+    margin-right: 0 !important;
+    padding: 16px !important;
+    overflow: visible !important;
+    background: rgb(247 250 253 / 48%) !important;
+  }
+  #calc .calc__form::after { display: none !important; }
   #calc .calc__opt { min-height: 42px !important; }
+  .adv-card__category { font-size: 14px !important; }
+  .adv-card__copy p { font-size: clamp(20px, 5.6vw, 25px) !important; line-height: 1.18 !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
