@@ -235,46 +235,23 @@
     var heroTitleRest = document.getElementById('heroTitleRest');
     var heroTitleA11y = document.getElementById('heroTitleA11y');
     var reduceTypewordMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var typewordIndex = reduceTypewordMotion ? typewordText.length : 0;
-    var typewordDeleting = false;
-    var typewordTimer = 0;
-
-    var renderTypeword = function () {
-      heroTypeword.textContent = typewordText.slice(0, typewordIndex);
-    };
-    var stepTypeword = function () {
-      if (typewordDeleting) {
-        typewordIndex = Math.max(0, typewordIndex - 1);
-      } else {
-        typewordIndex = Math.min(typewordText.length, typewordIndex + 1);
-      }
-      renderTypeword();
-
-      var delay = typewordDeleting ? 72 : 118;
-      if (!typewordDeleting && typewordIndex === typewordText.length) {
-        typewordDeleting = true;
-        delay = 1500;
-      } else if (typewordDeleting && typewordIndex === 0) {
-        typewordDeleting = false;
-        delay = 520;
-      }
-      typewordTimer = window.setTimeout(stepTypeword, delay);
-    };
 
     window.setHeroTypedTitle = function (nextWord, nextRest) {
-      window.clearTimeout(typewordTimer);
       typewordText = (nextWord || '').trim().toUpperCase();
       nextRest = (nextRest || '').trim().toUpperCase();
-      typewordIndex = reduceTypewordMotion ? typewordText.length : 0;
-      typewordDeleting = false;
       heroTypeword.setAttribute('data-word', typewordText);
+      heroTypeword.textContent = typewordText;
       if (heroTitleRest) {
         heroTitleRest.textContent = nextRest;
         heroTitleRest.hidden = !nextRest;
       }
       if (heroTitleA11y) heroTitleA11y.textContent = (typewordText + (nextRest ? ' ' + nextRest : '')).trim();
-      renderTypeword();
-      if (!reduceTypewordMotion) typewordTimer = window.setTimeout(stepTypeword, 180);
+      if (!reduceTypewordMotion) {
+        heroTypeword.classList.remove('is-sweeping');
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () { heroTypeword.classList.add('is-sweeping'); });
+        });
+      }
     };
 
     var initialHeroTitle = document.getElementById('heroTitle');
@@ -282,7 +259,6 @@
       initialHeroTitle && initialHeroTitle.dataset.activeTypeword || typewordText,
       initialHeroTitle && initialHeroTitle.dataset.activeRest || (heroTitleRest ? heroTitleRest.textContent : '')
     );
-    window.addEventListener('pagehide', function () { window.clearTimeout(typewordTimer); }, { once: true });
   }
 
   /* ─── Слайдер «До / После» ─── */

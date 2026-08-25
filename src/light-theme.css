@@ -1912,6 +1912,76 @@ body,
   .advantage-stack.is-scroll-linked .adv-card { transition: none; }
 }
 
+/* Reference-matched hero sweep and high-contrast header. */
+.nav a,
+.nav.is-open a,
+.nav a:hover,
+.nav a:focus-visible,
+.nav.is-open a:hover,
+.nav.is-open a:focus-visible {
+  color: #fff !important;
+}
+
+.header__actions .btn {
+  font-weight: 700 !important;
+}
+
+.hero__typewriter-cursor {
+  display: none !important;
+}
+
+.hero__typewriter.hero__typeword-sweep {
+  display: block;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #f2dd94 0 44%,
+    #c679c4 47%,
+    #fa3d1d 51%,
+    #ffb005 55%,
+    #e1e1fe 59%,
+    #0358f7 63%,
+    transparent 69% 100%
+  );
+  background-position: 100% 50%;
+  background-size: 240% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, background-position;
+}
+
+.hero__typewriter.hero__typeword-sweep.is-sweeping {
+  animation: hero-type-sweep 5.2s cubic-bezier(.65, 0, .35, 1) infinite;
+}
+
+@keyframes hero-type-sweep {
+  0%, 8% {
+    clip-path: inset(0 100% 0 0);
+    background-position: 100% 50%;
+  }
+  38%, 66% {
+    clip-path: inset(0);
+    background-position: 0% 50%;
+  }
+  96%, 100% {
+    clip-path: inset(0 100% 0 0);
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__typewriter.hero__typeword-sweep,
+  .hero__typewriter.hero__typeword-sweep.is-sweeping {
+    animation: none !important;
+    color: #D9AA45 !important;
+    -webkit-text-fill-color: #D9AA45;
+    background: none;
+    clip-path: none;
+  }
+}
+
 /* Cascade guard for immersive controls. */
 .hero__slide-btn {
   color: #101820;
@@ -3409,4 +3479,18 @@ body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .hero__typewriter-cursor { animation: none; opacity: 1; }
   .advantage-stack.is-scroll-linked .adv-card { transition: none; }
+}
+
+/* Final header contrast overrides. */
+.nav a,
+.nav.is-open a,
+.nav a:hover,
+.nav a:focus-visible,
+.nav.is-open a:hover,
+.nav.is-open a:focus-visible {
+  color: #fff !important;
+}
+
+.header__actions .btn {
+  font-weight: 700 !important;
 }
