@@ -3494,3 +3494,19 @@ body { overflow-x: clip; }
 .header__actions .btn {
   font-weight: 700 !important;
 }
+
+/* Evenly distributed hero specification rail. */
+.hero__stats {
+  width: 100% !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  padding-inline: 0 !important;
+}
+
+.hero__stats li,
+.hero__stats li:first-child,
+.hero__stats li:last-child {
+  width: 100%;
+  padding-inline: clamp(12px, 2vw, 32px) !important;
+  align-items: center !important;
+  text-align: center;
+}
