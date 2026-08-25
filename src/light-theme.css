@@ -3315,6 +3315,37 @@ body { overflow-x: clip; }
 
 #calc .calc__group legend { color: #9B741F !important; }
 
+/* Hero hierarchy and contrast refinement. */
+.nav a,
+.nav.is-open a {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+.hero__typewriter-line {
+  margin-bottom: clamp(22px, 2.8vh, 40px) !important;
+}
+
+.hero__cta .btn,
+.hero__slide-btn {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+.hero__slides {
+  position: relative;
+  top: clamp(28px, 4vh, 54px);
+}
+
+.hero__stats {
+  color: #F2EFE8 !important;
+  background: rgb(7 10 14 / 34%) !important;
+}
+.hero__stats b,
+.hero__stats span {
+  color: #F2EFE8 !important;
+}
+
 @media (max-width: 760px) {
   .header__inner { width: 100%; padding-inline: 14px; }
   .header__actions .btn {
@@ -3371,6 +3402,8 @@ body { overflow-x: clip; }
   .adv-card__copy p { font-size: clamp(20px, 5.6vw, 25px) !important; line-height: 1.18 !important; }
   .hero__typewriter-line,
   .hero__title .accent { transform: scaleX(1.04) !important; }
+  .hero__typewriter-line { margin-bottom: 12px !important; }
+  .hero__slides { top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
